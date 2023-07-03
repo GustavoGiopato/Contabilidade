@@ -1,5 +1,4 @@
-
 from Db import *
 
-printT("alguma coisa")
+create_connection();
 
