@@ -1,4 +1,6 @@
-from Db import create_connection, obter_livro_diario
+from Db import *
+
+
 
 connection, cursor = create_connection()
 
