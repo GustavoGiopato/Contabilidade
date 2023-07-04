@@ -4,7 +4,7 @@ def create_connection():
     try:
         connection = psycopg2.connect(
             host="localhost",
-            port="5433",
+            port="5432",
             database="contabilidade",
             user="postgres",
             password="afn-8188"
