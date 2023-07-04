@@ -19,31 +19,10 @@ Antes de executar a aplicação, certifique-se de que você tenha um banco de da
 
 1. Instale o PostgreSQL em seu sistema, se ainda não estiver instalado.
 2. Crie um banco de dados chamado "contabilidade" no PostgreSQL.
-3. Crie uma tabela chamada "LANCAMENTOS_CONTABEIS" com a seguinte estrutura:
+3. Baixe a tabela com os dados contábeis da pasta Database.
+4. Faça oestore o backup no banco.
+5. Configure a conexão com banco em lib/Db.py.
 
-   ```sql
-   CREATE TABLE LANCAMENTOS_CONTABEIS (
-       COD_LANCAMENTO SERIAL PRIMARY KEY,
-       DATA DATE,
-       NUMERO_LANCAMENTO INTEGER,
-       HISTORICO VARCHAR(255)
-   );
-   ```
-
-4. Crie uma tabela chamada "LIVRO_DIARIO" com a seguinte estrutura:
-
-   ```sql
-   CREATE TABLE LIVRO_DIARIO (
-       ID SERIAL PRIMARY KEY,
-       COD_LANCAMENTO_CONTABIL INTEGER,
-       COD_CONTA_DEBITO INTEGER,
-       COD_CONTA_CREDITO INTEGER,
-       VALOR NUMERIC(10,2),
-       FOREIGN KEY (COD_LANCAMENTO_CONTABIL) REFERENCES LANCAMENTOS_CONTABEIS (COD_LANCAMENTO)
-   );
-   ```
-
-5. Insira alguns dados de exemplo na tabela "LANCAMENTOS_CONTABEIS" usando os comandos INSERT fornecidos anteriormente.
 
 ## Instalação e Execução
 
@@ -70,6 +49,4 @@ Siga as etapas a seguir para executar o Sistema de Contabilidade:
 
 Contribuições são bem-vindas! Se você tiver alguma melhoria ou correção para o projeto, sinta-se à vontade para enviar uma solicitação de pull.
 
-## Licença
 
-Este projeto está licenciado sob a [MIT License](https://github.com/seu-usuario/seu-repositorio/blob/main/LICENSE).
