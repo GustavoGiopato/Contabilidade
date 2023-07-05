@@ -5,7 +5,8 @@ from tkcalendar import DateEntry
 
 
 class LancamentoContabil:
-    def __init__(self, conta_debito, conta_credito, valor, historico):
+    def __init__(self,data, conta_debito, conta_credito, valor, historico):
+        self.data = data
         self.conta_debito = conta_debito
         self.conta_credito = conta_credito
         self.valor = valor
@@ -22,6 +23,7 @@ class LivroDiario:
     def mostrar_livro_diario(self):
         livro_diario_texto = "Livro Diário:\n\n"
         for lancamento in self.lancamentos:
+            livro_diario_texto += f"Data: {lancamento.data}\n"
             livro_diario_texto += f"Conta Débito: {lancamento.conta_debito}\n"
             livro_diario_texto += f"Conta Crédito: {lancamento.conta_credito}\n"
             livro_diario_texto += f"Valor: {lancamento.valor}\n"
@@ -36,12 +38,12 @@ def adicionar_lancamento():
     valor = float(entry_valor.get())
     historico = entry_historico.get()
     data = entry_data.get_date()  # Obter a data selecionada pelo usuário
-    lancamento = LancamentoContabil(conta_debito, conta_credito, valor, historico, data)
+    lancamento = LancamentoContabil(data, conta_debito, conta_credito, valor, historico)
 
     livro_diario.adicionar_lancamento(lancamento)
 
 def exibir_livro_diario():
-    livro_diario_texto = livro_diario.mostrar_livro_diario()    
+    livro_diario_texto = livro_diario.mostrar_livro_diario()
     messagebox.showinfo("Livro Diário", livro_diario_texto)
 
 # Criação do livro diário
