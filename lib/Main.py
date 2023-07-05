@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 from tkcalendar import DateEntry
 import tkinter.ttk as ttk
+from ttkthemes import ThemedTk
 
 
 class LancamentoContabil:
@@ -51,11 +52,12 @@ def atualizar_tabela():
 livro_diario = LivroDiario()
 
 # Criação da janela principal
-janela = tk.Tk()
+janela = ThemedTk(theme="equilux", themebg=True)
+janela.iconbitmap('lib\icon\icon.ico')
 janela.title("Livro Diário")
 
 # Labels
-label_data = tk.Label(janela, text="Data:")
+label_data = ttk.Label(janela, text="Data:")
 label_data.grid(row=1, column=1, sticky="e")
 entry_data = DateEntry(janela, date_pattern="dd/mm/yyyy", width=12, background='darkblue', foreground='white',
                        borderwidth=2)
@@ -64,30 +66,30 @@ entry_data.grid(row=1, column=2, sticky="w")
 contas_debito = ["Conta A", "Conta B", "Conta C"]
 contas_credito = ["Conta X", "Conta Y", "Conta Z"]
 
-label_conta_debito = tk.Label(janela, text="Conta Débito:")
+label_conta_debito = ttk.Label(janela, text="Conta Débito:")
 label_conta_debito.grid(row=1, column=0, sticky="e")
 var_conta_debito = tk.StringVar()
-dropdown_conta_debito = tk.OptionMenu(janela, var_conta_debito, *contas_debito)
+dropdown_conta_debito = ttk.OptionMenu(janela, var_conta_debito, *contas_debito)
 dropdown_conta_debito.grid(row=1, column=1, sticky="w")
 
-label_valor = tk.Label(janela, text="Valor:")
+label_valor = ttk.Label(janela, text="Valor:")
 label_valor.grid(row=1, column=2, sticky="e")
-entry_valor = tk.Entry(janela)
+entry_valor = ttk.Entry(janela)
 entry_valor.grid(row=1, column=3, sticky="we", padx=10)
 
-label_conta_credito = tk.Label(janela, text="Conta Crédito:")
+label_conta_credito = ttk.Label(janela, text="Conta Crédito:")
 label_conta_credito.grid(row=2, column=0, sticky="e")
 var_conta_credito = tk.StringVar()
-dropdown_conta_credito = tk.OptionMenu(janela, var_conta_credito, *contas_credito)
+dropdown_conta_credito = ttk.OptionMenu(janela, var_conta_credito, *contas_credito)
 dropdown_conta_credito.grid(row=2, column=1, sticky="w")
 
-label_historico = tk.Label(janela, text="Histórico:")
+label_historico = ttk.Label(janela, text="Histórico:")
 label_historico.grid(row=2, column=1, sticky="e")
-entry_historico = tk.Entry(janela)
+entry_historico = ttk.Entry(janela)
 entry_historico.grid(row=2, column=2, sticky="we", columnspan= 3, padx=10)
 
 # Botões
-botao_adicionar = tk.Button(janela, text="Adicionar Lançamento", command=adicionar_lancamento)
+botao_adicionar = ttk.Button(janela, text="Adicionar Lançamento", command=adicionar_lancamento)
 botao_adicionar.grid(row=3, column=0, columnspan=4)
 
 # Treeview - Tabela
