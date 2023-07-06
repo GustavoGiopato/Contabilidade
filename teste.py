@@ -3,7 +3,7 @@ from tkinter import messagebox
 from tkcalendar import DateEntry
 import tkinter.ttk as ttk
 from ttkthemes import ThemedTk
-from Db import create_connection, obter_cod_plano_de_contas
+from lib.Db import create_connection, obter_cod_plano_de_contas
 
 class LancamentoContabil:
     def __init__(self, data, conta_debito, conta_credito, valor, historico):
@@ -51,7 +51,6 @@ livro_diario = LivroDiario()
 janela = ThemedTk(theme="equilux", themebg=True)
 janela.iconbitmap('lib\icon\icon.ico')
 janela.title("Livro Diário")
-janela.minsize(750, 500)
 
 # Labels
 label_data = ttk.Label(janela, text="Data:")
@@ -111,10 +110,6 @@ tabela.heading("Histórico", text="Histórico")
 
 # Add the table to the window
 tabela.grid(row=4, column=0, columnspan=4, padx=10, pady=10, sticky="nsew")
-
-#alguma merda do cleiton
-style = ttk.Style()
-style.configure('TCombobox', postoffset=(0, 0, 100, 0))
 
 # Configure grid weights to make the widgets responsive
 janela.grid_rowconfigure(4, weight=1)

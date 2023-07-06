@@ -3,7 +3,7 @@ from tkinter import messagebox
 from tkcalendar import DateEntry
 import tkinter.ttk as ttk
 from ttkthemes import ThemedTk
-from Db import create_connection, obter_cod_plano_de_contas
+from lib.Db import create_connection, obter_cod_plano_de_contas
 
 class LancamentoContabil:
     def __init__(self, data, conta_debito, conta_credito, valor, historico):
