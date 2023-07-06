@@ -7,7 +7,7 @@ def create_connection():
             port="5432",
             database="contabilidade",
             user="postgres",
-            password="ads2023"
+            password="afn-8188"
         )
         cursor = connection.cursor()
         return connection, cursor
@@ -16,19 +16,32 @@ def create_connection():
         return None, None
 
 # Função para obter os dados do Livro Diário
-def obter_livro_diario(connection, cursor):
-    # Consulta SQL
-    sql = """
-        SELECT lc.COD_LANCAMENTO, lc.DATA, lc.NUMERO_LANCAMENTO, lc.HISTORICO, ld.COD_CONTA_DEBITO, ld.COD_CONTA_CREDITO, ld.VALOR
-        FROM LANCAMENTOS_CONTABEIS lc
-        JOIN LIVRO_DIARIO ld ON lc.COD_LANCAMENTO = ld.COD_LANCAMENTO_CONTABIL;
-    """
+def obter_cod_plano_de_contas():
+    try:
+        # Estabelecer a conexão com o banco de dados
+        connection = psycopg2.connect(
+            host="localhost",
+            port="5432",
+            database="contabilidade",
+            user="postgres",
+            password="afn-8188"
+        )
+        
+        # Criar um cursor para executar comandos SQL
+        cursor = connection.cursor()
+        
+        # Executar a consulta
+        cursor.execute("SELECT codigo FROM plano_de_contas")
+        
+        # Obter os resultados
+        resultados = cursor.fetchall()
+        
+        # Fechar a conexão com o banco de dados
+        connection.close()
+        
+        # Retornar os resultados como uma lista
+        return [resultado[0] for resultado in resultados]
     
-    # Execução da consulta
-    cursor.execute(sql)
-    
-    # Obtenção dos resultados
-    resultados = cursor.fetchall()
-    
-    # Retorno dos resultados
-    return resultados
+    except psycopg2.Error as e:
+        print("Erro ao conectar ao banco de dados PostgreSQL:", e)
+        return []

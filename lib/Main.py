@@ -3,6 +3,7 @@ from tkinter import messagebox
 from tkcalendar import DateEntry
 import tkinter.ttk as ttk
 from ttkthemes import ThemedTk
+from Db import *
 
 
 class LancamentoContabil:
@@ -63,8 +64,11 @@ entry_data = DateEntry(janela, date_pattern="dd/mm/yyyy", width=12, background='
                        borderwidth=2)
 entry_data.grid(row=1, column=2, sticky="w")
 
-contas_debito = ["Conta A", "Conta B", "Conta C"]
-contas_credito = ["Conta X", "Conta Y", "Conta Z"]
+contas_debito = obter_cod_plano_de_contas();
+contas_credito = obter_cod_plano_de_contas();
+
+#contas_debito = ["Conta A", "Conta B", "Conta C"]
+#contas_credito = ["Conta X", "Conta Y", "Conta Z"]
 
 label_conta_debito = ttk.Label(janela, text="Conta Débito:")
 label_conta_debito.grid(row=1, column=0, sticky="e")
