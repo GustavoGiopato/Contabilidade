@@ -5,7 +5,6 @@ import tkinter.ttk as ttk
 from ttkthemes import ThemedTk
 from Db import *
 
-
 class LancamentoContabil:
     def __init__(self, data, conta_debito, conta_credito, valor, historico):
         self.data = data
@@ -13,7 +12,6 @@ class LancamentoContabil:
         self.conta_credito = conta_credito
         self.valor = valor
         self.historico = historico
-
 
 class LivroDiario:
     def __init__(self):
@@ -25,8 +23,6 @@ class LivroDiario:
     def mostrar_livro_diario(self):
         return self.lancamentos
     
-
-
 def adicionar_lancamento():
     conta_debito = var_conta_debito.get()
     conta_credito = var_conta_credito.get()
@@ -36,7 +32,6 @@ def adicionar_lancamento():
     lancamento = LancamentoContabil(data, conta_debito, conta_credito, valor, historico)
     livro_diario.adicionar_lancamento(lancamento)
     atualizar_tabela()
-
 
 def atualizar_tabela():
     tabela.delete(*tabela.get_children())
@@ -49,10 +44,8 @@ def atualizar_tabela():
             lancamento.historico
         ))
 
-
 # Criação do livro diário
 livro_diario = LivroDiario()
-
 
 # Criação da janela principal
 janela = ThemedTk(theme="equilux", themebg=True)
@@ -67,12 +60,10 @@ entry_data = DateEntry(janela, date_pattern="dd/mm/yyyy", width=12, background='
 entry_data.grid(row=1, column=2, sticky="w")
 
 cursor, connection = create_connection()
-contas_debito = obter_cod_plano_de_contas(connection, cursor)
+contas_debito = obter_cod_plano_de_contas(connection,cursor)
 cursor, connection = create_connection()
-contas_credito = obter_cod_plano_de_contas(connection, cursor)
-
-#contas_debito = ["Conta A", "Conta B", "Conta C"]
-#contas_credito = ["Conta X", "Conta Y", "Conta Z"]
+contas_credito = obter_cod_plano_de_contas(connection,cursor)
+connection.close()
 
 label_conta_debito = ttk.Label(janela, text="Conta Débito:")
 label_conta_debito.grid(row=1, column=0, sticky="e")

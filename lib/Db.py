@@ -18,19 +18,18 @@ def create_connection():
 # Função para obter os dados do Livro Diário
 def obter_cod_plano_de_contas(cursor, connection):
     try:
-        cursor = connection.cursor()
         
-        # Executar a consulta
-        cursor.execute("SELECT codigo FROM plano_de_contas")
+        cursor.execute("SELECT codigo, descricao FROM plano_de_contas")
+        
         
         # Obter os resultados
         resultados = cursor.fetchall()
-        
+        print(resultados)
         # Fechar a conexão com o banco de dados
         connection.close()
         
         # Retornar os resultados como uma lista
-        return [resultado[0] for resultado in resultados]
+        return [f'{resultado[0]} - {resultado[1]}' for resultado in resultados]
     
     except psycopg2.Error as e:
         print("Erro ao conectar ao banco de dados PostgreSQL:", e)
