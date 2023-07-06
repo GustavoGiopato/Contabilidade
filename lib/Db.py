@@ -24,7 +24,7 @@ def obter_cod_plano_de_contas(cursor, connection):
         
         # Obter os resultados
         resultados = cursor.fetchall()
-        print(resultados)
+        
         # Fechar a conexão com o banco de dados
         connection.close()
         

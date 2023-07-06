@@ -3,7 +3,7 @@ from tkinter import messagebox
 from tkcalendar import DateEntry
 import tkinter.ttk as ttk
 from ttkthemes import ThemedTk
-from Db import *
+from Db import create_connection, obter_cod_plano_de_contas
 
 class LancamentoContabil:
     def __init__(self, data, conta_debito, conta_credito, valor, historico):
@@ -51,6 +51,7 @@ livro_diario = LivroDiario()
 janela = ThemedTk(theme="equilux", themebg=True)
 janela.iconbitmap('lib\icon\icon.ico')
 janela.title("Livro Diário")
+janela.minsize(750, 500)
 
 # Labels
 label_data = ttk.Label(janela, text="Data:")
@@ -68,8 +69,8 @@ connection.close()
 label_conta_debito = ttk.Label(janela, text="Conta Débito:")
 label_conta_debito.grid(row=1, column=0, sticky="e")
 var_conta_debito = tk.StringVar()
-dropdown_conta_debito = ttk.OptionMenu(janela, var_conta_debito, *contas_debito)
-dropdown_conta_debito.grid(row=1, column=1, sticky="w")
+combobox_conta_debito = ttk.Combobox(janela, textvariable=var_conta_debito, values=contas_debito)
+combobox_conta_debito.grid(row=1, column=1, sticky="w")
 
 label_valor = ttk.Label(janela, text="Valor:")
 label_valor.grid(row=1, column=2, sticky="e")
@@ -79,8 +80,8 @@ entry_valor.grid(row=1, column=3, sticky="we", padx=10)
 label_conta_credito = ttk.Label(janela, text="Conta Crédito:")
 label_conta_credito.grid(row=2, column=0, sticky="e")
 var_conta_credito = tk.StringVar()
-dropdown_conta_credito = ttk.OptionMenu(janela, var_conta_credito, *contas_credito)
-dropdown_conta_credito.grid(row=2, column=1, sticky="w")
+combobox_conta_credito = ttk.Combobox(janela, textvariable=var_conta_credito, values=contas_credito)
+combobox_conta_credito.grid(row=2, column=1, sticky="w")
 
 label_historico = ttk.Label(janela, text="Histórico:")
 label_historico.grid(row=2, column=1, sticky="e")
@@ -110,6 +111,10 @@ tabela.heading("Histórico", text="Histórico")
 
 # Add the table to the window
 tabela.grid(row=4, column=0, columnspan=4, padx=10, pady=10, sticky="nsew")
+
+#alguma merda do cleiton
+style = ttk.Style()
+style.configure('TCombobox', postoffset=(0, 0, 100, 0))
 
 # Configure grid weights to make the widgets responsive
 janela.grid_rowconfigure(4, weight=1)
