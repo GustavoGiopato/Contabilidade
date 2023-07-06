@@ -24,6 +24,7 @@ class LivroDiario:
 
     def mostrar_livro_diario(self):
         return self.lancamentos
+    
 
 
 def adicionar_lancamento():
@@ -52,6 +53,7 @@ def atualizar_tabela():
 # Criação do livro diário
 livro_diario = LivroDiario()
 
+
 # Criação da janela principal
 janela = ThemedTk(theme="equilux", themebg=True)
 janela.iconbitmap('lib\icon\icon.ico')
@@ -64,8 +66,10 @@ entry_data = DateEntry(janela, date_pattern="dd/mm/yyyy", width=12, background='
                        borderwidth=2)
 entry_data.grid(row=1, column=2, sticky="w")
 
-contas_debito = obter_cod_plano_de_contas();
-contas_credito = obter_cod_plano_de_contas();
+cursor, connection = create_connection()
+contas_debito = obter_cod_plano_de_contas(connection, cursor)
+cursor, connection = create_connection()
+contas_credito = obter_cod_plano_de_contas(connection, cursor)
 
 #contas_debito = ["Conta A", "Conta B", "Conta C"]
 #contas_credito = ["Conta X", "Conta Y", "Conta Z"]

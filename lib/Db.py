@@ -16,18 +16,8 @@ def create_connection():
         return None, None
 
 # Função para obter os dados do Livro Diário
-def obter_cod_plano_de_contas():
+def obter_cod_plano_de_contas(cursor, connection):
     try:
-        # Estabelecer a conexão com o banco de dados
-        connection = psycopg2.connect(
-            host="localhost",
-            port="5432",
-            database="contabilidade",
-            user="postgres",
-            password="afn-8188"
-        )
-        
-        # Criar um cursor para executar comandos SQL
         cursor = connection.cursor()
         
         # Executar a consulta
@@ -45,3 +35,5 @@ def obter_cod_plano_de_contas():
     except psycopg2.Error as e:
         print("Erro ao conectar ao banco de dados PostgreSQL:", e)
         return []
+
+     
