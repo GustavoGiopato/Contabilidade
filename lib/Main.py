@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import messagebox
 from tkcalendar import DateEntry
 import tkinter.ttk as ttk
 from ttkthemes import ThemedTk
@@ -22,7 +21,7 @@ class LivroDiario:
 
     def mostrar_livro_diario(self):
         return self.lancamentos
-    
+
 def adicionar_lancamento():
     conta_debito = var_conta_debito.get()
     conta_credito = var_conta_credito.get()
@@ -51,7 +50,7 @@ livro_diario = LivroDiario()
 janela = ThemedTk(theme="equilux", themebg=True)
 janela.iconbitmap('lib\icon\icon.ico')
 janela.title("Livro Diário")
-janela.minsize(750, 500)
+janela.minsize(750, 350)
 
 # Labels
 label_data = ttk.Label(janela, text="Data:")
@@ -69,7 +68,7 @@ connection.close()
 label_conta_debito = ttk.Label(janela, text="Conta Débito:")
 label_conta_debito.grid(row=1, column=0, sticky="e")
 var_conta_debito = tk.StringVar()
-combobox_conta_debito = ttk.Combobox(janela, textvariable=var_conta_debito, values=contas_debito)
+combobox_conta_debito = ttk.Combobox(janela, textvariable=var_conta_debito, values=contas_debito, state="readonly")
 combobox_conta_debito.grid(row=1, column=1, sticky="w")
 
 label_valor = ttk.Label(janela, text="Valor:")
@@ -80,7 +79,7 @@ entry_valor.grid(row=1, column=3, sticky="we", padx=10)
 label_conta_credito = ttk.Label(janela, text="Conta Crédito:")
 label_conta_credito.grid(row=2, column=0, sticky="e")
 var_conta_credito = tk.StringVar()
-combobox_conta_credito = ttk.Combobox(janela, textvariable=var_conta_credito, values=contas_credito)
+combobox_conta_credito = ttk.Combobox(janela, textvariable=var_conta_credito, values=contas_credito, state="readonly")
 combobox_conta_credito.grid(row=2, column=1, sticky="w")
 
 label_historico = ttk.Label(janela, text="Histórico:")
