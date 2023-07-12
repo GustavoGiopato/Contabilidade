@@ -111,6 +111,19 @@ tabela.heading("Histórico", text="Histórico")
 # Add the table to the window
 tabela.grid(row=4, column=0, columnspan=4, padx=10, pady=10, sticky="nsew")
 
+# Adicionar botões de baixo
+botao_1 = ttk.Button(janela, text="Botão 1", command=lambda: print("1"))
+botao_1.grid(row=5, column=0)
+
+botao_2 = ttk.Button(janela, text="Botão 2", command=lambda: print("2"))
+botao_2.grid(row=5, column=1)
+
+botao_3 = ttk.Button(janela, text="Botão 3", command=lambda: print("3"))
+botao_3.grid(row=5, column=2)
+
+botao_4 = ttk.Button(janela, text="Botão 4", command=lambda: print("4"))
+botao_4.grid(row=5, column=3)
+
 #alguma merda do cleiton
 style = ttk.Style()
 style.configure('TCombobox', postoffset=(0, 0, 100, 0))
