@@ -12,6 +12,20 @@ class LancamentoContabil:
         self.valor = valor
         self.historico = historico
 
+def atualizarTabela():
+    connection, cursor = create_connection_FDB()
+    tabela.delete(*tabela.get_children())  # Limpa os dados antigos da tabela
+
+    cursor.execute("select c.data, l.cod_conta_debito, l.cod_conta_credito, l.valor, c.historico from livro_diario l inner join lancamentos_contabeis c on l.cod_lancamento_contabil = c.cod_lancamento")
+
+    resultados = cursor.fetchall()
+
+    for resultado in resultados:
+        tabela.insert("", "end", values=resultado)
+
+    connection.commit()  # Confirma as alterações no banco de dados
+    connection.close()
+
 class LivroDiario:
     def __init__(self):
         self.lancamentos = []
@@ -28,20 +42,20 @@ def adicionar_lancamento():
     valor = float(entry_valor.get())
     historico = entry_historico.get()
     data = entry_data.get_date()
-    lancamento = LancamentoContabil(data, conta_debito, conta_credito, valor, historico)
-    livro_diario.adicionar_lancamento(lancamento)
-    atualizar_tabela()
+    print(conta_debito)
+    print(conta_credito)
+    print(valor)
+    print(historico)
+    print(data)
+    # connection, cursor = create_connection_FDB()
+    # cursor.execute("insert into livro_diario (valor, cod_conta_credito, cod_conta_debito) values (%s, %s, '%s')" , (valor, int(conta_credito), int(conta_debito)))
 
-def atualizar_tabela():
-    tabela.delete(*tabela.get_children())
-    for lancamento in livro_diario.mostrar_livro_diario():
-        tabela.insert("", "end", values=(
-            lancamento.data.strftime("%d/%m/%Y"),
-            lancamento.conta_debito,
-            lancamento.conta_credito,
-            lancamento.valor,
-            lancamento.historico
-        ))
+    # connection.commit()
+    # cursor.execute("insert into lancamentos_contabeis (historico,data) values (%s, %s, %s)" % (historico, data))
+    # connection.commit()  # Confirma as alterações no banco de dados
+    # connection.close()
+    atualizarTabela()
+    
 
 # Criação do livro diário
 livro_diario = LivroDiario()
@@ -91,6 +105,8 @@ entry_historico.grid(row=2, column=2, sticky="we", columnspan= 3, padx=10)
 botao_adicionar = ttk.Button(janela, text="Adicionar Lançamento", command=adicionar_lancamento)
 botao_adicionar.grid(row=3, column=0, columnspan=4)
 
+
+#//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 # Treeview - Tabela
 tabela = ttk.Treeview(janela, columns=("Data", "Conta Débito", "Conta Crédito", "Valor", "Histórico"), show="headings")
 
@@ -111,9 +127,11 @@ tabela.heading("Histórico", text="Histórico")
 # Add the table to the window
 tabela.grid(row=4, column=0, columnspan=4, padx=10, pady=10, sticky="nsew")
 
+
+#//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 # Adicionar botões de baixo
-botao_1 = ttk.Button(janela, text="Botão 1", command=lambda: print("1"))
-botao_1.grid(row=5, column=0)
+botao_atualizar = ttk.Button(janela, text="Atualizar", command=atualizarTabela)
+botao_atualizar.grid(row=5, column=0, padx=10, pady=10)
 
 botao_2 = ttk.Button(janela, text="Botão 2", command=lambda: print("2"))
 botao_2.grid(row=5, column=1)

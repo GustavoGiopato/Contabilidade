@@ -1,15 +1,52 @@
 import fdb
+import tkinter as tk
+from tkcalendar import DateEntry
+import tkinter.ttk as ttk
+from ttkthemes import ThemedTk
 
-con = fdb.connect(
+connection = fdb.connect(
     dsn='C:\\Users\\bolad\\OneDrive\\Documentos\\Banco\\teste.fdb',
     user='SYSDBA', password='masterkey',
     charset='iso8859_1'
 )
 # Create a Cursor object that operates in the context of Connection con:
-cur = con.cursor()
+cursor = connection.cursor()
 
-# Execute the SELECT statement:
-cur.execute("select * from LANCAMENTOS_CONTABEIS")
+def atualizarTabela():
+    tabela.delete(*tabela.get_children())  # Limpa os dados antigos da tabela
 
-# Retrieve all rows as a sequence and print that seque
-print (cur.fetchall())
+    cursor.execute("select c.data, l.cod_conta_debito, l.cod_conta_credito, l.valor, c.historico from livro_diario l inner join lancamentos_contabeis c on l.cod_lancamento_contabil = c.cod_lancamento")
+
+    resultados = cursor.fetchall()
+
+    for resultado in resultados:
+        tabela.insert("", "end", values=resultado)
+
+    connection.close()
+
+janela = ThemedTk(theme="equilux", themebg=True)
+janela.iconbitmap('lib\icon\icon.ico')
+janela.title("Livro Diário")
+janela.minsize(750, 350)
+
+tabela = ttk.Treeview(janela, columns=("Data", "Conta Débito", "Conta Crédito", "Valor", "Histórico"), show="headings")
+# Set the column widths
+tabela.column("Data", width=100)
+tabela.column("Conta Débito", width=100)
+tabela.column("Conta Crédito", width=100)
+tabela.column("Valor", width=100)
+tabela.column("Histórico", width=200)
+# Set the column headers
+tabela.heading("Data", text="Data")
+tabela.heading("Conta Débito", text="Conta Débito")
+tabela.heading("Conta Crédito", text="Conta Crédito")
+tabela.heading("Valor", text="Valor")
+tabela.heading("Histórico", text="Histórico")
+# Add the table to the window
+tabela.grid(row=4, column=0, columnspan=4, padx=10, pady=10, sticky="nsew")
+
+# Adicionar botão de atualização
+botao_atualizar = ttk.Button(janela, text="Atualizar", command=atualizarTabela)
+botao_atualizar.grid(row=5, column=0, padx=10, pady=10)
+
+janela.mainloop()

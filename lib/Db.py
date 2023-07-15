@@ -46,15 +46,20 @@ def obter_cod_plano_de_contas(cursor, connection):
     except psycopg2.Error as e:
         print("Erro ao conectar ao banco de dados PostgreSQL:", e)
         return []
-def insere_registros(conta_debito,conta_credito,valor,historico,data, cursor, connection):
-    try:
-        sql1 = cursor.execute("insert into livro_diario (valor,cod_conta_credito,cod_conta_debito) values (%s, %s, %s)", (valor, conta_credito, conta_debito))
-        connection.commit()
-        sql2 = cursor.execute("insert into partida_de_diario (data, historico) values (%s, %s)", (data, historico))
-        connection.commit()
-        print(conta_debito,conta_credito,valor,historico,data)
-        return sql1, sql2
-    except:
-        print("deu erro pai")
+    
+
+def insere_registros(conta_debito,conta_credito,valor,historico,data):
+    connection = fdb.connect(
+            dsn='C:\\Users\\bolad\\OneDrive\\Documentos\\Banco\\teste.fdb',
+            user='SYSDBA', password='masterkey',
+            charset='iso8859_1'
+        )
+    cursor = connection.cursor()
+    sql1 = cursor.execute("insert into livro_diario (valor,cod_conta_credito,cod_conta_debito) values (%s, %s, %s)", (valor, conta_credito, conta_debito))
+    connection.commit()
+    sql2= cursor.execute("insert into lancamentos_contabeis (historico,data,) values (%s, %s, %s)", (historico, data))
+    connection.commit()
+    return sql1, sql2
+    
     
      

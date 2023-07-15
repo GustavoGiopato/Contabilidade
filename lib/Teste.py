@@ -23,18 +23,7 @@ class LivroDiario:
         return self.lancamentos
 
 def adicionar_lancamento():
-    conta_debito = var_conta_debito.get()
-    conta_credito = var_conta_credito.get()
-    valor = float(entry_valor.get())
-    historico = entry_historico.get()
-    data = entry_data.get_date()
-    #insere registros no banco
-    cursor, connection = create_connection()
-    insere_registros(conta_debito,conta_credito,valor,historico,data,cursor,connection)
-    connection.close()
     
-    lancamento = LancamentoContabil(data, conta_debito, conta_credito, valor, historico)
-    livro_diario.adicionar_lancamento(lancamento)
     atualizar_tabela()
 
 def atualizar_tabela():
