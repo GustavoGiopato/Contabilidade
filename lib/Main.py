@@ -2,7 +2,7 @@ import tkinter as tk
 from tkcalendar import DateEntry
 import tkinter.ttk as ttk
 from ttkthemes import ThemedTk
-from Db import create_connection, obter_cod_plano_de_contas
+from Db import create_connection_FDB, obter_cod_plano_de_contas
 
 class LancamentoContabil:
     def __init__(self, data, conta_debito, conta_credito, valor, historico):
@@ -59,9 +59,9 @@ entry_data = DateEntry(janela, date_pattern="dd/mm/yyyy", width=12, background='
                        borderwidth=2)
 entry_data.grid(row=1, column=2, sticky="w")
 
-cursor, connection = create_connection()
+cursor, connection = create_connection_FDB()
 contas_debito = obter_cod_plano_de_contas(connection,cursor)
-cursor, connection = create_connection()
+cursor, connection = create_connection_FDB()
 contas_credito = obter_cod_plano_de_contas(connection,cursor)
 connection.close()
 

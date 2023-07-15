@@ -1,4 +1,5 @@
 import psycopg2
+import fdb
 
 def create_connection():
     try:
@@ -15,13 +16,24 @@ def create_connection():
         print("Error connecting to PostgreSQL database:", e)
         return None, None
 
+def create_connection_FDB():
+    try:
+        connection = fdb.connect(
+            dsn='C:\\Users\\bolad\\OneDrive\\Documentos\\Banco\\teste.fdb',
+            user='SYSDBA', password='masterkey',
+            charset='iso8859_1'
+        )
+        cursor = connection.cursor()
+        return connection, cursor
+    except psycopg2.Error as e:
+        print("Error connecting to Firebird database:", e)
+        return None, None
+
 # Função para obter os dados do Livro Diário
 def obter_cod_plano_de_contas(cursor, connection):
-    try:
-        
-        cursor.execute("SELECT codigo, descricao FROM plano_de_contas")
-        
-        
+    try:        
+        cursor.execute("SELECT cod, descricao FROM plano_de_contas")
+
         # Obter os resultados
         resultados = cursor.fetchall()
         
