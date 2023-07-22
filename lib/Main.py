@@ -39,21 +39,20 @@ class LivroDiario:
 def adicionar_lancamento():
     conta_debito = var_conta_debito.get()
     conta_credito = var_conta_credito.get()
+    numero_conta_credito = conta_credito.split('-')[0].strip()
+    conta_credito = int(numero_conta_credito)  
+    numero_conta_debito = conta_debito.split('-')[0].strip()  # Extrai o número antes do hífen
+    conta_debito = int(numero_conta_debito) 
+
     valor = float(entry_valor.get())
     historico = entry_historico.get()
     data = entry_data.get_date()
-    print(conta_debito)
-    print(conta_credito)
-    print(valor)
-    print(historico)
-    print(data)
-    # connection, cursor = create_connection_FDB()
-    # cursor.execute("insert into livro_diario (valor, cod_conta_credito, cod_conta_debito) values (%s, %s, '%s')" , (valor, int(conta_credito), int(conta_debito)))
-
-    # connection.commit()
-    # cursor.execute("insert into lancamentos_contabeis (historico,data) values (%s, %s, %s)" % (historico, data))
-    # connection.commit()  # Confirma as alterações no banco de dados
-    # connection.close()
+    connection, cursor = create_connection_FDB()
+    cursor.execute("insert into livro_diario (valor, cod_conta_credito, cod_conta_debito) values (%s, %d, %d)" % (valor, int(conta_credito), int(conta_debito)))
+    connection.commit()
+    cursor.execute("insert into lancamentos_contabeis (historico,data) values (%s, %s, %s)" % (historico, data))
+    connection.commit()  # Confirma as alterações no banco de dados
+    connection.close()
     atualizarTabela()
     
 
