@@ -49,4 +49,6 @@ tabela.grid(row=4, column=0, columnspan=4, padx=10, pady=10, sticky="nsew")
 botao_atualizar = ttk.Button(janela, text="Atualizar", command=atualizarTabela)
 botao_atualizar.grid(row=5, column=0, padx=10, pady=10)
 
+
+
 janela.mainloop()

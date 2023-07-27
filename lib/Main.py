@@ -2,15 +2,17 @@ import tkinter as tk
 from tkcalendar import DateEntry
 import tkinter.ttk as ttk
 from ttkthemes import ThemedTk
-from Db import create_connection_FDB, obter_cod_plano_de_contas
+from Db import create_connection_FDB, obter_cod_plano_de_contas, obter_lancamento_contabel
 
 class LancamentoContabil:
-    def __init__(self, data, conta_debito, conta_credito, valor, historico):
+    def __init__(self, data, conta_debito, conta_credito, valor, historico, lancamento):
         self.data = data
         self.conta_debito = conta_debito
         self.conta_credito = conta_credito
         self.valor = valor
         self.historico = historico
+        self.lancamento = lancamento
+        
 
 def atualizarTabela():
     connection, cursor = create_connection_FDB()
@@ -43,7 +45,7 @@ def adicionar_lancamento():
     conta_credito = int(numero_conta_credito)  
     numero_conta_debito = conta_debito.split('-')[0].strip()  # Extrai o número antes do hífen
     conta_debito = int(numero_conta_debito) 
-
+    
     valor = float(entry_valor.get())
     historico = entry_historico.get()
     data = entry_data.get_date()
@@ -74,6 +76,9 @@ entry_data.grid(row=1, column=2, sticky="w")
 
 cursor, connection = create_connection_FDB()
 contas_debito = obter_cod_plano_de_contas(connection,cursor)
+#Conexão com banco de dados / acionar select do lançamento contágel
+cursor, connection = create_connection_FDB()
+lancamento_contabel = obter_lancamento_contabel(connection,cursor)
 cursor, connection = create_connection_FDB()
 contas_credito = obter_cod_plano_de_contas(connection,cursor)
 connection.close()
@@ -100,14 +105,22 @@ label_historico.grid(row=2, column=1, sticky="e")
 entry_historico = ttk.Entry(janela)
 entry_historico.grid(row=2, column=2, sticky="we", columnspan= 3, padx=10)
 
+
+label_lancamento_contabel = ttk.Label(janela, text="Lançamento Contábel:")
+label_lancamento_contabel.grid(row=3, column=2, sticky="e")
+# entry_lancamento_contabel = ttk.Entry(janela)
+# entry_lancamento_contabel.grid(row=3, column=3, sticky="we", columnspan= 3, padx=10)
+combobox_lancamento_contabel = ttk.Combobox(janela, textvariable=tk.StringVar(), values=lancamento_contabel, state="readonly")
+combobox_lancamento_contabel.grid(row=3, column=3, sticky="w")
+
 # Botões
 botao_adicionar = ttk.Button(janela, text="Adicionar Lançamento", command=adicionar_lancamento)
-botao_adicionar.grid(row=3, column=0, columnspan=4)
+botao_adicionar.grid(row=3, column=0, columnspan=3)
 
 
 #//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 # Treeview - Tabela
-tabela = ttk.Treeview(janela, columns=("Data", "Conta Débito", "Conta Crédito", "Valor", "Histórico"), show="headings")
+tabela = ttk.Treeview(janela, columns=("Data", "Conta Débito", "Conta Crédito", "Valor", "Histórico", "Lancamento"), show="headings")
 
 # Set the column widths
 tabela.column("Data", width=100)
@@ -115,13 +128,14 @@ tabela.column("Conta Débito", width=100)
 tabela.column("Conta Crédito", width=100)
 tabela.column("Valor", width=100)
 tabela.column("Histórico", width=200)
+tabela.column("Lancamento", width=50)  # Correct the identifier to "Lancamento"
 
-# Set the column headers
 tabela.heading("Data", text="Data")
 tabela.heading("Conta Débito", text="Conta Débito")
 tabela.heading("Conta Crédito", text="Conta Crédito")
 tabela.heading("Valor", text="Valor")
 tabela.heading("Histórico", text="Histórico")
+tabela.heading("Lancamento", text="Lancamento")  # Match the identifier to "Lancamento"
 
 # Add the table to the window
 tabela.grid(row=4, column=0, columnspan=4, padx=10, pady=10, sticky="nsew")

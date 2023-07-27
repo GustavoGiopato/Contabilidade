@@ -47,6 +47,18 @@ def obter_cod_plano_de_contas(cursor, connection):
         print("Erro ao conectar ao banco de dados PostgreSQL:", e)
         return []
     
+def obter_lancamento_contabel(cursor, connection):
+    try:
+        cursor.execute("select cod_lancamento_contabil from livro_diario")
+        
+        resultados = cursor.fetchall()
+        
+        connection.close()
+        return [resultado for resultado in resultados]
+    except psycopg2.Error as e:
+        print("Erro ao conectar ao banco de dados PostgreSQL:", e)
+        return []
+    
 
 def insere_registros(conta_debito,conta_credito,valor,historico,data):
     connection = fdb.connect(
