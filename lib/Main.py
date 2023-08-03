@@ -45,14 +45,16 @@ def adicionar_lancamento():
     conta_credito = int(numero_conta_credito)  
     numero_conta_debito = conta_debito.split('-')[0].strip()  # Extrai o número antes do hífen
     conta_debito = int(numero_conta_debito) 
-    
     valor = float(entry_valor.get())
     historico = entry_historico.get()
     data = entry_data.get_date()
+
     connection, cursor = create_connection_FDB()
-    cursor.execute("insert into livro_diario (valor, cod_conta_credito, cod_conta_debito) values (%s, %d, %d)" % (valor, int(conta_credito), int(conta_debito)))
-    connection.commit()
     cursor.execute("insert into lancamentos_contabeis (historico,data) values (%s, %s, %s)" % (historico, data))
+    connection.commit()
+    cursor.execute("insert into livro_diario (valor, cod_conta_credito, cod_conta_debito) values (%s, %d, %d)" % (valor, int(conta_credito), int(conta_debito)))
+    
+    
     connection.commit()  # Confirma as alterações no banco de dados
     connection.close()
     atualizarTabela()
@@ -128,14 +130,14 @@ tabela.column("Conta Débito", width=100)
 tabela.column("Conta Crédito", width=100)
 tabela.column("Valor", width=100)
 tabela.column("Histórico", width=200)
-tabela.column("Lancamento", width=50)  # Correct the identifier to "Lancamento"
+tabela.column("Lancamento", width=50) 
 
 tabela.heading("Data", text="Data")
 tabela.heading("Conta Débito", text="Conta Débito")
 tabela.heading("Conta Crédito", text="Conta Crédito")
 tabela.heading("Valor", text="Valor")
 tabela.heading("Histórico", text="Histórico")
-tabela.heading("Lancamento", text="Lancamento")  # Match the identifier to "Lancamento"
+tabela.heading("Lancamento", text="Lancamento")  
 
 # Add the table to the window
 tabela.grid(row=4, column=0, columnspan=4, padx=10, pady=10, sticky="nsew")
