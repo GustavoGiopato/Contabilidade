@@ -1,0 +1,14 @@
+Coisas que faltam fazer na merda do código:
+
+1
+    atualizartabela() está recebeno um select e inserindo em cada campo, porem, ainda não foi implementado a coluna de Lançamento.
+    Então, é preciso adiconar o lançamento e mudar o select para que faça sentido na tabela.
+
+
+2
+    Descobrir como caralhos fazer para adiocnar lançamento 
+
+3
+    Provavelmetne atulizar o banco pra ter lançamentos de uma forma que funcione pro programa
+
+    
