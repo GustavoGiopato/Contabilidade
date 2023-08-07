@@ -2,7 +2,7 @@ import tkinter as tk
 from tkcalendar import DateEntry
 import tkinter.ttk as ttk
 from ttkthemes import ThemedTk
-from Db import create_connection_FDB, obter_cod_plano_de_contas, obter_lancamento_contabel
+from Db import create_connection_FDB, obter_cod_plano_de_contas, obter_lancamento_contabel,insere_registros
 
 class LancamentoContabil:
     def __init__(self, data, conta_debito, conta_credito, valor, historico, lancamento):
@@ -49,14 +49,13 @@ def adicionar_lancamento():
     historico = entry_historico.get()
     data = entry_data.get_date()
 
-    connection, cursor = create_connection_FDB()
-    cursor.execute("insert into lancamentos_contabeis (historico,data) values (%s, %s, %s)" % (historico, data))
-    connection.commit()
-    cursor.execute("insert into livro_diario (valor, cod_conta_credito, cod_conta_debito) values (%s, %d, %d)" % (valor, int(conta_credito), int(conta_debito)))
-    
-    
-    connection.commit()  # Confirma as alterações no banco de dados
-    connection.close()
+    insere_registros(conta_debito,conta_credito,valor,historico,data)
+    # connection, cursor = create_connection_FDB()
+    # cursor.execute("insert into lancamentos_contabeis (historico,data) values (%s, %s)" % (historico, data))
+    # connection.commit()
+    # cursor.execute("insert into livro_diario (valor, cod_conta_credito, cod_conta_debito) values (%s, %d, %d)" % (valor, int(conta_credito), int(conta_debito)))
+    # connection.commit()  # Confirma as alterações no banco de dados
+    # connection.close()
     atualizarTabela()
     
 

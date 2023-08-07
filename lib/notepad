@@ -11,4 +11,7 @@ Coisas que faltam fazer na merda do código:
 3
     Provavelmetne atulizar o banco pra ter lançamentos de uma forma que funcione pro programa
 
-    
+4
+    descoberto que os problemas do insert estão no banco.
+    ele não cria um sem o outro, tem uma dependencia esquisita
+    possivel solução: criar uma nova tabela e inserir tudo de uma vez
