@@ -18,7 +18,7 @@ def atualizarTabela():
     connection, cursor = create_connection_FDB()
     tabela.delete(*tabela.get_children())  # Limpa os dados antigos da tabela
 
-    cursor.execute("select c.data, l.cod_conta_debito, l.cod_conta_credito, l.valor, c.historico from livro_diario l inner join lancamentos_contabeis c on l.cod_lancamento_contabil = c.cod_lancamento")
+    cursor.execute("select dia, cod_conta_debito, cod_conta_credito, valor, historico, cod_lancamento_contabil from contabilidade")
 
     resultados = cursor.fetchall()
 
