@@ -50,7 +50,7 @@ def obter_cod_plano_de_contas(cursor, connection):
     
 def obter_lancamento_contabel(cursor, connection):
     try:
-        cursor.execute("select cod_lancamento_contabil from livro_diario")
+        cursor.execute("select cod_lancamento_contabil from contabilidade group by 1")
         
         resultados = cursor.fetchall()
         
@@ -59,6 +59,7 @@ def obter_lancamento_contabel(cursor, connection):
     except fdb.Error as e:
         print("Erro ao conectar ao banco de dados PostgreSQL:", e)
         return []
+
     
 
 def insere_registros(conta_debito,conta_credito,valor,historico,data):
@@ -67,12 +68,11 @@ def insere_registros(conta_debito,conta_credito,valor,historico,data):
     #         user='SYSDBA', password='masterkey',
     #         charset='iso8859_1'
     #     )
-    print(valor,conta_credito,conta_debito)
     connection, cursor = create_connection_FDB() 
     cursor = connection.cursor()
-    
-    # cursor.execute("insert into lancamentos_contabeis (historico,data,) values (%s, %s)", (historico, data))
-    # connection.commit()  
+    print(historico, data,int(conta_debito),int(conta_credito),valor)
+    cursor.execute("insert into contabilidade (historico,dia,cod_conta_debito,cod_conta_credito,valor) values (%s, %s, %d, %d, %d)", (historico,data,conta_debito,conta_credito,valor))
+    connection.commit()  
     
     #cursor.execute("insert into livro_diario (valor, cod_conta_credito, cod_conta_debito) values (%s, %d, %d)" % (valor, int(conta_credito), int(conta_debito)))
     connection.commit()

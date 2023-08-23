@@ -50,12 +50,6 @@ def adicionar_lancamento():
     data = entry_data.get_date()
 
     insere_registros(conta_debito,conta_credito,valor,historico,data)
-    # connection, cursor = create_connection_FDB()
-    # cursor.execute("insert into lancamentos_contabeis (historico,data) values (%s, %s)" % (historico, data))
-    # connection.commit()
-    # cursor.execute("insert into livro_diario (valor, cod_conta_credito, cod_conta_debito) values (%s, %d, %d)" % (valor, int(conta_credito), int(conta_debito)))
-    # connection.commit()  # Confirma as alterações no banco de dados
-    # connection.close()
     atualizarTabela()
     
 
@@ -109,8 +103,6 @@ entry_historico.grid(row=2, column=2, sticky="we", columnspan= 3, padx=10)
 
 label_lancamento_contabel = ttk.Label(janela, text="Lançamento Contábel:")
 label_lancamento_contabel.grid(row=3, column=2, sticky="e")
-# entry_lancamento_contabel = ttk.Entry(janela)
-# entry_lancamento_contabel.grid(row=3, column=3, sticky="we", columnspan= 3, padx=10)
 combobox_lancamento_contabel = ttk.Combobox(janela, textvariable=tk.StringVar(), values=lancamento_contabel, state="readonly")
 combobox_lancamento_contabel.grid(row=3, column=3, sticky="w")
 
